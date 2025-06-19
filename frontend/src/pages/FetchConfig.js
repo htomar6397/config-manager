@@ -21,7 +21,7 @@ export default function FetchConfig() {
     
     try {
       const res = await axios.get(`http://localhost:8080/api/configurations/${configId}`);
-      setData(res.data);
+      setData(res);
     } catch (err) {
       console.error('Error fetching configuration:', err);
       setIsError(true);
@@ -63,12 +63,25 @@ export default function FetchConfig() {
     <div className="min-h-screen bg-white dark:bg-gray-900 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
           <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
             Configuration Details
           </h1>
           <p className="text-gray-600 dark:text-gray-400">
             View and manage configuration details
           </p>
+          </div>
+            <Link 
+                        to="/"
+                        className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                      >
+                        <svg className="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Home
+                      </Link>
+        </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -78,7 +91,7 @@ export default function FetchConfig() {
               <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">
                 Fetch Configuration
               </h2>
-              <form onSubmit={(e) => handleSubmit(null, e)} className="space-y-4">
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
                   <label htmlFor="configId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                     Configuration ID
@@ -117,9 +130,7 @@ export default function FetchConfig() {
                 </button>
               </form>
               </div>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+              <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
               <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 About this endpoint
               </h3>
@@ -135,9 +146,9 @@ export default function FetchConfig() {
                 </p>
               </div>
             </div>
-          </div>
-          
-          {/* Right column - Results */}
+            </div>
+            
+            {/* Right column - Results */}
           <div className="lg:col-span-2">
             <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
@@ -167,49 +178,28 @@ export default function FetchConfig() {
                   </div>
                 ) : data ? (
                   <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">ID</p>
-                        <p className="mt-1 text-sm text-gray-900 dark:text-white">{data.id || 'N/A'}</p>
+                    {/* Table Section */}
+                    {data.data && Array.isArray(data.data) && data.data.length > 0 ? (
+                      <div className="overflow-x-auto">
+                        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                          <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                            {data.data.map((row, i) => (
+                              <tr key={i}>
+                                {row.map((cell, j) => (
+                                  <td key={j} className="px-4 py-2 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100">
+                                    {cell}
+                                  </td>
+                                ))}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Name</p>
-                        <p className="mt-1 text-sm text-gray-900 dark:text-white">{data.name || 'N/A'}</p>
+                    ) : (
+                      <div className="text-center py-6 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <p className="text-gray-500 dark:text-gray-400">No data available to display</p>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Type</p>
-                        <p className="mt-1 text-sm text-gray-900 dark:text-white">{data.type || 'N/A'}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Status</p>
-                        <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                            data.status === 'active' 
-                              ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' 
-                              : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                          }`}>
-                            {data.status || 'N/A'}
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Description</p>
-                      <p className="mt-1 text-sm text-gray-900 dark:text-white">
-                        {data.description || 'No description available.'}
-                      </p>
-                    </div>
-                    <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
-                      <Link
-                        to={`/update-remark${data.id ? `/${data.id}` : ''}`}
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                      >
-                        <svg className="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        Update Remark
-                      </Link>
-                    </div>
+                    )}
                   </div>
                 ) : (
                   <div className="text-center py-12">
@@ -225,6 +215,10 @@ export default function FetchConfig() {
               </div>
             </div>
           </div>
+          </div>
+          
+          
+         
         </div>
       </div>
     );

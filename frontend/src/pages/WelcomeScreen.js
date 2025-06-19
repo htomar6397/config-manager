@@ -4,6 +4,7 @@ export default function WelcomeScreen() {
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 p-6">
       <div className="max-w-6xl mx-auto">
+    
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-semibold text-gray-800 dark:text-white mb-2">
             Configuration Manager
@@ -12,7 +13,11 @@ export default function WelcomeScreen() {
             Manage your configurations and remarks with ease
           </p>
         </div>
-
+        <div className="px-6 border-t border-gray-200 dark:border-gray-800 text-center">
+          <p className="text-lg text-gray-500 dark:text-gray-400 font-light">
+            Developed by <span className="font-medium">Mayank Tomar</span>
+          </p>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Fetch Configuration Card */}
           <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
@@ -75,18 +80,8 @@ export default function WelcomeScreen() {
           </div>
         </div>
 
-        {/* Footer */}
-        <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-800 text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Developed by Mayank Tomar
-          </p>
-          <a 
-            href="mailto:htomar6397@gmail.com" 
-            className="inline-block mt-1 text-sm text-blue-600 dark:text-blue-400 hover:underline"
-          >
-            htomar6397@gmail.com
-          </a>
-        </div>
+     
+       
       </div>
     </div>
   );

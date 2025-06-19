@@ -5,13 +5,13 @@ import Configuration from '../models/Configuration.js';
 const router = express.Router();
 
 /**
- * GET by configId (not _id)
+ * GET by configId
  */
 router.get('/:id', async (req, res) => {
   try {
     const config = await Configuration.findOne({ configId: req.params.id }).lean({ virtuals: true });
     if (!config) return res.status(404).json({ error: 'Configuration not found' });
-
+    console.log(config);
     res.status(200).json(config.data);
   } catch (error) {
     console.error(`GET /api/configurations/${req.params.id} error:`, error);
@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
 });
 
 /**
- * PUT by configId (not _id)
+ * PUT by configId
  */
 router.put('/:id', async (req, res) => {
   try {

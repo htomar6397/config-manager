@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Link, useParams } from "react-router-dom";
 
 export default function UpdateRemark() {
   const [formData, setFormData] = useState({
@@ -108,12 +109,25 @@ export default function UpdateRemark() {
     <div className="min-h-screen bg-white dark:bg-gray-900 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
-            Update Remark
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Add or update remarks for a configuration
-          </p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
+                Update Remark
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400">
+                Add or update remarks for a configuration
+              </p>
+            </div>
+            <Link 
+              to="/"
+              className="inline-flex items-center px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm text-sm font-medium text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            >
+              <svg className="-ml-1 mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Back to Home
+            </Link>
+          </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -214,7 +228,12 @@ export default function UpdateRemark() {
               </div>
             </div>
             
-            <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+           
+          </div>
+          
+          {/* Right column - Results */}
+          <div className="lg:col-span-2">
+          <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6 mb-6">
               <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 About this endpoint
               </h3>
@@ -223,17 +242,13 @@ export default function UpdateRemark() {
                   <span className="font-medium">Method:</span> PUT
                 </p>
                 <p>
-                  <span className="font-medium">Endpoint:</span> /api/configurations/&#123;id&#125;/remark
+                  <span className="font-medium">Endpoint:</span> /api/configurations/&#123;id&#125;
                 </p>
                 <p>
                   Update the remark for a specific configuration. The configuration ID is required, and the remark cannot be empty.
                 </p>
               </div>
             </div>
-          </div>
-          
-          {/* Right column - Results */}
-          <div className="lg:col-span-2">
             <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
               <div className="px-6 py-5 border-b border-gray-200 dark:border-gray-700">
                 <h2 className="text-lg font-medium text-gray-800 dark:text-white">
