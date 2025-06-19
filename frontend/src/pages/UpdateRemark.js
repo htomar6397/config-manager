@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function UpdateRemark() {
   const [formData, setFormData] = useState({
@@ -75,7 +75,7 @@ export default function UpdateRemark() {
     
     try {
       await axios.put(
-        `http://localhost:8080/api/configurations/${formData.configId}`,
+        `${process.env.REACT_APP_API_BASE_URL}/configurations/${formData.configId}`,
         { remark: formData.remark },
         {
           headers: {

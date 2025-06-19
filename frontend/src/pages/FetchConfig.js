@@ -20,7 +20,7 @@ export default function FetchConfig() {
     setErrorMessage("");
     
     try {
-      const res = await axios.get(`http://localhost:8080/api/configurations/${configId}`);
+      const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/configurations/${configId}`);
       setData(res);
     } catch (err) {
       console.error('Error fetching configuration:', err);
@@ -51,13 +51,7 @@ export default function FetchConfig() {
     }
   };
 
-  // Handle suggestion clicks
-  const handleSuggestionClick = (value, fieldName) => {
-    setFormData(prev => ({
-      ...prev,
-      [fieldName]: value
-    }));
-  };
+  
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 p-6">
