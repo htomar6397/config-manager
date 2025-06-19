@@ -16,7 +16,7 @@ const LoadingFallback = () => (
   </div>
 );
 
-export default function App() {
+function App() {
   return (
     <Router>
       <ThemeProvider>
@@ -28,8 +28,6 @@ export default function App() {
                 <Route path="/fetch-config" element={<FetchConfig />} />
                 <Route path="/update-remark" element={<UpdateRemark />} />
                 <Route path="/" element={<WelcomeScreen />} />
-                
-                {/* 404 - Redirect to home */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
@@ -40,3 +38,5 @@ export default function App() {
     </Router>
   );
 }
+
+export default App;

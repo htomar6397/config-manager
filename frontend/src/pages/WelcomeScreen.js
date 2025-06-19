@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 
 export default function WelcomeScreen() {
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 p-6">
       <div className="max-w-6xl mx-auto">

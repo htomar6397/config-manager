@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -8,6 +8,17 @@ export default function FetchConfig() {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showDelayMessage, setShowDelayMessage] = useState(false);
+  const delayTimer = useRef(null);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (delayTimer.current) {
+        clearTimeout(delayTimer.current);
+      }
+    };
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e) => {
@@ -16,19 +27,28 @@ export default function FetchConfig() {
     if (!configId) return;
     
     setIsLoading(true);
+    setShowDelayMessage(false);
     setIsError(false);
     setErrorMessage("");
     
+    // Set timer to show delay message after 10 seconds
+    delayTimer.current = setTimeout(() => {
+      setShowDelayMessage(true);
+    }, 10000);
+    
     try {
       const res = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/configurations/${configId}`);
+      clearTimeout(delayTimer.current);
       setData(res);
     } catch (err) {
+      clearTimeout(delayTimer.current);
       console.error('Error fetching configuration:', err);
       setIsError(true);
       setErrorMessage(err.response?.data?.error || "Failed to fetch configuration");
       setData(null);
     } finally {
       setIsLoading(false);
+      setShowDelayMessage(false);
     }
   };
 
@@ -152,8 +172,14 @@ export default function FetchConfig() {
               </div>
               <div className="p-6">
                 {isLoading ? (
-                  <div className="flex justify-center py-12">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+                  <div className="text-center py-12 space-y-4">
+                    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mx-auto"></div>
+                    {showDelayMessage && (
+                      <div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-md text-sm text-blue-700 dark:text-blue-300">
+                        <p>Render free instance is spinning up. This can take up to 50 seconds when the instance is inactive.</p>
+                        <p className="font-medium mt-1">Please wait while we wake up the server...</p>
+                      </div>
+                    )}
                   </div>
                 ) : isError ? (
                   <div className="bg-red-50 dark:bg-red-900/20 border-l-4 border-red-500 dark:border-red-400 p-4">
