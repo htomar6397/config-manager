@@ -1,5 +1,9 @@
 # Configuration Manager
 
+[![Screenshot](screenshots/thumbnail.png)](https://config-manager-umber.vercel.app/)
+
+> *Click the screenshot above to visit the live demo*
+
 A full-stack web application for managing and viewing configuration data with remarks. Built as an assignment for CodeRower Software Pvt Ltd.
 
 ## ✨ Features
@@ -72,10 +76,17 @@ A full-stack web application for managing and viewing configuration data with re
    ```
    The app will open in your default browser at `http://localhost:3000`
 
+## 🌐 Live Demo
+
+- **Frontend:** [https://config-manager-umber.vercel.app/](https://config-manager-umber.vercel.app/)
+- **Backend API:** [https://config-manager-ms0b.onrender.com/api](https://config-manager-ms0b.onrender.com/api)
+
 ## 📚 API Documentation
 
 ### Base URL
-`http://localhost:8080/api`
+`https://config-manager-ms0b.onrender.com/api`
+
+For local development: `http://localhost:8080/api`
 
 ### Endpoints
 
@@ -87,14 +98,10 @@ Retrieves configuration data by ID.
 
 **Response:**
 ```json
-{
-  "data": [
+[
     ["Header 1", "Header 2"],
     ["Value 1", "Value 2"]
-  ],
-  "configId": "config123",
-  "remark": "Sample remark"
-}
+]
 ```
 
 #### PUT `/configurations/:id`
@@ -113,7 +120,7 @@ Updates the remark for a configuration.
 **Response:**
 ```json
 {
-  "message": "Remark updated successfully",
+  "message": "success"
 }
 ```
 
