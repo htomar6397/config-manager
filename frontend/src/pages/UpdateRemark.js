@@ -167,7 +167,7 @@ export default function UpdateRemark() {
                     name="configId"
                     value={formData.configId}
                     onChange={handleInputChange}
-                    placeholder="Enter configuration ID"
+                    placeholder="Try by typing 'qwertyuiop' for testing"
                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
                     required
                   />
